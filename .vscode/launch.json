@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-MsvcUsuariosApplication<msvc-usuarios>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.e1.luis.msvc.usuarios.msvc_usuarios.MsvcUsuariosApplication",
+            "projectName": "msvc-usuarios",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
