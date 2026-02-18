@@ -9,6 +9,16 @@
             "projectName": "msvc-usuarios",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-MsvcCursosApplication<msvc-cursos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.msvc.cursos.msvc_cursos.MsvcCursosApplication",
+            "projectName": "msvc-cursos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
