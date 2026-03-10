@@ -2,7 +2,7 @@ package com.example.msvc.cursos.msvc_cursos.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.example.msvc.cursos.msvc_cursos.entity.Curso;
+import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
 
 public interface CursoRepository extends CrudRepository<Curso, Long>{
 

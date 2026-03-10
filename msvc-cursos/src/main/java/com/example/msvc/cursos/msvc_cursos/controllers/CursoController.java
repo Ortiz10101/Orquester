@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.msvc.cursos.msvc_cursos.entity.Curso;
+import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
 import com.example.msvc.cursos.msvc_cursos.services.CursoService;
 
 import jakarta.validation.Valid;

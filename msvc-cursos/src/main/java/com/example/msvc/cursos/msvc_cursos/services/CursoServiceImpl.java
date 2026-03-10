@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.msvc.cursos.msvc_cursos.entity.Curso;
+import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
 import com.example.msvc.cursos.msvc_cursos.repositories.CursoRepository;
 
 @Service

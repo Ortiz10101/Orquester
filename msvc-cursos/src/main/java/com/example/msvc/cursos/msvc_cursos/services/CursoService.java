@@ -1,8 +1,8 @@
 package com.example.msvc.cursos.msvc_cursos.services;
 
-import com.example.msvc.cursos.msvc_cursos.entity.Curso;
-
 import java.util.Optional;
+
+import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
 
 import java.util.List;
 
