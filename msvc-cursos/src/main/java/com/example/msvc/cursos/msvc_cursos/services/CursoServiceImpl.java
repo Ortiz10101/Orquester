@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.msvc.cursos.msvc_cursos.models.Usuario;
 import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
 import com.example.msvc.cursos.msvc_cursos.repositories.CursoRepository;
 
@@ -37,6 +38,18 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public void eliminar(Long id) {
         impl.deleteById(id);
+    }
+
+    @Override
+    public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'asignarUsuario'");
+    }
+
+    @Override
+    public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'crearUsuario'");
     }
 
 }

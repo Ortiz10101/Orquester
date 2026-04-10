@@ -3,6 +3,8 @@ package com.example.msvc.cursos.msvc_cursos.models.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.msvc.cursos.msvc_cursos.models.Usuario;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -28,8 +31,12 @@ public class Curso {
     @JoinColumn(name = "curso_id")
     private List<CursoUsuario> cursoUsuarios;
 
+    @Transient
+    private List <Usuario> usuarios;
+
     public Curso(){
         cursoUsuarios = new ArrayList<>();
+        usuarios = new ArrayList<>();
     }
 
     public Long getId() {
@@ -63,5 +70,15 @@ public class Curso {
     public void setCursoUsuarios(List<CursoUsuario> cursoUsuarios) {
         this.cursoUsuarios = cursoUsuarios;
     }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    
 
 }
