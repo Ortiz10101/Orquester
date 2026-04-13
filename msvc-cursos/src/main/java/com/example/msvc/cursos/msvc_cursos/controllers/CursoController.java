@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.msvc.cursos.msvc_cursos.models.Usuario;
 import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
 import com.example.msvc.cursos.msvc_cursos.services.CursoService;
 
+import feign.FeignException;
 import jakarta.validation.Valid;
 
 @RestController
@@ -34,7 +36,7 @@ public class CursoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity detalle(@PathVariable Long id) {
+    public ResponseEntity<?> detalle(@PathVariable Long id) {
         Optional<Curso> o = service.porId(id);
         if (o.isPresent()) {
             return ResponseEntity.ok(o.get());
@@ -76,6 +78,51 @@ public class CursoController {
         if (o.isPresent()) {
             service.eliminar(id);
             return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/asignar-usuario/{cursoId}")
+    public ResponseEntity<?> asignarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId){
+        Optional<Usuario> o = null;
+        try {
+            o = service.asignarUsuario(usuario, cursoId);
+        } catch (FeignException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al asignar el usuario al curso");
+        }
+
+        if (o.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(o.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/crear-usuario/{cursoId}")
+    public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId){
+        Optional<Usuario> o = null;
+        try {
+            o = service.crearUsuario(usuario, cursoId);
+        } catch (FeignException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el usuario para el curso");
+        }
+
+        if (o.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(o.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+     @DeleteMapping("/eliminar-usuario/{cursoId}")
+    public ResponseEntity<?> eliminarUsuario(@RequestBody Usuario usuario, @PathVariable Long cursoId){
+        Optional<Usuario> o = null;
+        try {
+            o = service.eliminarUsuario(usuario, cursoId);
+        } catch (FeignException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el usuario del curso");
+        }
+
+        if (o.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(o.get());
         }
         return ResponseEntity.notFound().build();
     }

@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.msvc.cursos.msvc_cursos.clients.UsuarioClientRest;
 import com.example.msvc.cursos.msvc_cursos.models.Usuario;
 import com.example.msvc.cursos.msvc_cursos.models.entity.Curso;
+import com.example.msvc.cursos.msvc_cursos.models.entity.CursoUsuario;
 import com.example.msvc.cursos.msvc_cursos.repositories.CursoRepository;
 
 @Service
@@ -16,6 +18,9 @@ public class CursoServiceImpl implements CursoService {
 
     @Autowired
     private CursoRepository impl;
+
+    @Autowired
+    private UsuarioClientRest client;
 
     @Override
     @Transactional(readOnly = true)
@@ -36,20 +41,72 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
+    @Transactional
     public void eliminar(Long id) {
         impl.deleteById(id);
     }
 
     @Override
+    @Transactional
     public Optional<Usuario> asignarUsuario(Usuario usuario, Long cursoId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'asignarUsuario'");
+        Optional<Curso> o = impl.findById(cursoId);
+
+        if(o.isPresent()) {
+
+            Usuario usuarioMsvc = client.detalle(usuario.getId());
+            Curso curso = o.get();
+            CursoUsuario cursoUsuario = new CursoUsuario();
+
+            cursoUsuario.setUsuarioId(usuarioMsvc.getId());
+            curso.addCursoUsuario(cursoUsuario);
+            impl.save(curso);
+
+            return Optional.of(usuarioMsvc);
+
+        }
+        return Optional.empty();
     }
 
     @Override
+    @Transactional
     public Optional<Usuario> crearUsuario(Usuario usuario, Long cursoId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearUsuario'");
+        Optional<Curso> o = impl.findById(cursoId);
+
+        if(o.isPresent()) {
+
+            Usuario usuarioNuevoMsvc = client.crear(usuario);
+            Curso curso = o.get();
+            CursoUsuario cursoUsuario = new CursoUsuario();
+
+            cursoUsuario.setUsuarioId(usuarioNuevoMsvc.getId());
+            curso.addCursoUsuario(cursoUsuario);
+            impl.save(curso);
+
+            return Optional.of(usuarioNuevoMsvc);
+
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @Transactional
+    public Optional<Usuario> eliminarUsuario(Usuario usuario, Long cursoId) {
+        Optional<Curso> o = impl.findById(cursoId);
+
+        if(o.isPresent()) {
+
+            Usuario usuarioMsvc = client.detalle(usuario.getId());
+            Curso curso = o.get();
+            CursoUsuario cursoUsuario = new CursoUsuario();
+
+            cursoUsuario.setUsuarioId(usuarioMsvc.getId());
+            curso.removeCursoUsuario(cursoUsuario);
+            impl.save(curso);
+
+            return Optional.of(usuarioMsvc);
+
+        }
+        return Optional.empty();
     }
 
 }
